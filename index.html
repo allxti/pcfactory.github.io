@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC Factory - Tienda Premium de Tecnología</title>
+    <meta name="description" content="Descubre el mejor catálogo de tecnología, smartphones, laptops y componentes en PC Factory. Compras rápidas, seguras y al mejor precio.">
+    <meta name="theme-color" content="#000000">
+    <link rel="icon" type="image/png" href="Isotipo.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Orbitron:ital,wght@0,400;0,700;0,900;1,700;1,900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Scripts -->
+    <script src="js/app.js" defer></script>
+</head>
+<body>
+
+    <!-- Header / Navbar -->
+    <header class="navbar">
+        <div class="logo-container">
+            <img src="Isotipo.png" alt="PC Factory Logo" class="logo-img">
+        </div>
+        
+        <!-- Tasas de Cambio -->
+        <div class="exchange-rates" id="exchange-rates">
+            <span class="rate-loading">Actualizando tasas...</span>
+        </div>
+
+        <nav>
+            <button id="cart-toggle" class="cart-toggle" aria-label="Abrir carrito">
+                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+                <span id="cart-count" class="cart-count">0</span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Lo Mejor en Tecnología</h1>
+        <p>Encuentra los equipos y componentes que necesitas al mejor precio del mercado.</p>
+    </section>
+
+    <!-- Product Catalog -->
+    <main class="products-section">
+        <h2 class="section-title">Productos Destacados</h2>
+        <div id="product-grid" class="product-grid">
+            <!-- Los productos se inyectarán aquí mediante JS -->
+        </div>
+    </main>
+
+    <!-- Shopping Cart Modal -->
+    <aside id="cart-modal" class="cart-modal">
+        <div class="cart-header">
+            <h3>Tu Carrito</h3>
+            <button id="close-cart" class="close-btn" aria-label="Cerrar carrito">&times;</button>
+        </div>
+        <div id="cart-items" class="cart-items">
+            <!-- Los items del carrito se inyectarán aquí -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cart-total">$0.00</span>
+            </div>
+            <button id="checkout-btn" class="btn btn-primary checkout-btn">Realizar pedido</button>
+        </div>
+    </aside>
+
+    <!-- Product Preview Modal -->
+    <div id="preview-modal" class="preview-modal">
+        <div class="preview-content">
+            <button id="close-preview" class="preview-close" aria-label="Cerrar vista previa">&times;</button>
+            <div class="preview-image-container">
+                <img id="preview-img" src="" alt="Vista previa">
+            </div>
+        <div class="preview-details">
+                <h3 id="preview-title" class="preview-title"></h3>
+                <div id="preview-price" class="preview-price"></div>
+                <p id="preview-desc" class="preview-desc"></p>
+                <button id="preview-add-cart" class="btn btn-primary">
+                    <span>Añadir al carrito</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -658,3 +658,72 @@ h1, h2, h3, h4, h5, h6 {
     .preview-price { font-size: 2rem; }
     .preview-details { padding: 1.5rem; }
 }
+
+/* ============================================================ */
+/* Footer SEO - Información local Barinas                       */
+/* ============================================================ */
+.site-footer {
+    background: var(--bg-secondary);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 4rem 5% 2rem;
+    margin-top: 2rem;
+}
+
+.footer-content {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.site-footer h2 {
+    font-size: 1.4rem;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+.site-footer p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-bottom: 1.2rem;
+    line-height: 1.8;
+    font-family: var(--font-body);
+}
+
+.footer-info {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.footer-info p {
+    margin-bottom: 0.6rem;
+}
+
+.footer-info a {
+    color: var(--cyan);
+    text-decoration: none;
+}
+
+.footer-info a:hover {
+    text-decoration: underline;
+    text-shadow: 0 0 8px var(--cyan-glow);
+}
+
+.footer-copy {
+    text-align: center;
+    font-size: 0.8rem;
+    margin-top: 2rem;
+    margin-bottom: 0;
+    opacity: 0.6;
+}
+
+@media (max-width: 768px) {
+    .site-footer {
+        padding: 3rem 5% 1.5rem;
+    }
+    .site-footer h2 {
+        font-size: 1.1rem;
+    }
+}

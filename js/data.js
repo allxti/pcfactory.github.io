@@ -6,7 +6,7 @@ const catalog = [
         category: "Smartphones",
         name: "iPhone 14 Plus 128GB",
         price: 899.99,
-        image: "iphone 14 plus 2.png",
+        image: "img/products/iPhone 14 Plus 128GB.png",
         description: "El smartphone más avanzado, ahora en su versión Plus con mayor pantalla.",
         stock: 15
     },
@@ -15,7 +15,7 @@ const catalog = [
         category: "Smartphones",
         name: "iPhone 14 Plus 256GB",
         price: 999.99,
-        image: "iphone 14 plus 3.png",
+        image: "img/products/iPhone 14 Plus 256GB.png",
         description: "Mayor almacenamiento para todas tus fotos y videos. Rendimiento insuperable.",
         stock: 8
     },

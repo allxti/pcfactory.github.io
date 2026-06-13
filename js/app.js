@@ -61,10 +61,52 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function processData(data) {
+        return data.map((item, index) => {
+            let rawPrice = item.Precio || "0";
+            let priceValue = parseFloat(String(rawPrice).replace(/[^\d.-]/g, '')) || 0;
+            
+            let imgUrl = item.Imagen || "";
+            
+            if (!imgUrl || imgUrl.includes("imgur.com/a/") || !imgUrl.startsWith("http")) {
+                let safeTitle = (item.Titulo || "default").trim();
+                imgUrl = `img/products/${safeTitle}.png`;
+            } else if (imgUrl.includes("imgur.com") && !imgUrl.endsWith(".jpg") && !imgUrl.endsWith(".png")) {
+                imgUrl += ".jpg";
+            }
+
+            let desc = (item.Descripcion || "Sin descripción disponible.").replace(/\n/g, '<br>');
+
+            return {
+                id: "gs_" + index,
+                category: item.Condicion || "General",
+                name: item.Titulo || "Producto sin nombre",
+                price: priceValue,
+                image: imgUrl,
+                description: desc
+            };
+        });
+    }
+
     async function loadCatalog() {
+        // Mostrar loader inicial solo si no hay caché
+        const cachedData = sessionStorage.getItem('pcfactory_catalog');
+        if (cachedData) {
+            catalog = JSON.parse(cachedData);
+            renderProducts();
+            
+            // Refrescar en background silenciosamente
+            fetch(GOOGLE_APP_SCRIPT_URL)
+                .then(res => res.json())
+                .then(data => {
+                    const freshCatalog = processData(data);
+                    sessionStorage.setItem('pcfactory_catalog', JSON.stringify(freshCatalog));
+                }).catch(e => console.error("Fallo actualización en background", e));
+            return;
+        }
+
         productGrid.innerHTML = '<div class="loading" style="grid-column: 1/-1; text-align: center; padding: 3rem;">Cargando catálogo ultrarrápido...</div>';
         
-        // Si la URL no ha sido cambiada, mostramos datos de prueba
         if (GOOGLE_APP_SCRIPT_URL === "PEGAR_AQUI_LA_URL_DE_TU_SCRIPT") {
             productGrid.innerHTML = '<div class="error-msg" style="grid-column: 1/-1; text-align: center; padding: 2rem; background: #fff3cd; color: #856404; border-radius: 12px;">Por favor, pega la URL de tu Google Apps Script en el archivo <b>js/app.js</b> para ver tus productos.</div>';
             return;
@@ -75,40 +117,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!response.ok) throw new Error("Error en la respuesta de la API");
             const data = await response.json();
             
-            catalog = data.map((item, index) => {
-                let rawPrice = item.Precio || "0";
-                let priceValue = parseFloat(String(rawPrice).replace(/[^\d.-]/g, '')) || 0;
-                
-                // Procesar Imagen (Imgur u otros)
-                let imgUrl = item.Imagen || "";
-                
-                // Si es un link de album de imgur (imgur.com/a/...), es dificil sacar la imagen directa sin API.
-                // Sugerimos al usuario usar links directos. Intentaremos un fallback a local si no hay imagen válida.
-                if (!imgUrl || imgUrl.includes("imgur.com/a/")) {
-                    let titleLower = (item.Titulo || "").toLowerCase();
-                    if (titleLower.includes("iphone 14 plus")) {
-                        imgUrl = "iphone 14 plus 2.png";
-                    } else if (titleLower.includes("iphone")) {
-                        imgUrl = "iphone 14 plus 3.png";
-                    } else {
-                        imgUrl = "https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&w=800&q=80";
-                    }
-                } else if (imgUrl.includes("imgur.com") && !imgUrl.endsWith(".jpg") && !imgUrl.endsWith(".png")) {
-                    // Si es un link simple de imgur sin extensión, le agregamos .jpg
-                    imgUrl += ".jpg";
-                }
-
-                let desc = (item.Descripcion || "Sin descripción disponible.").replace(/\n/g, '<br>');
-
-                return {
-                    id: "gs_" + index,
-                    category: item.Condicion || "General",
-                    name: item.Titulo || "Producto sin nombre",
-                    price: priceValue,
-                    image: imgUrl,
-                    description: desc
-                };
-            });
+            catalog = processData(data);
+            sessionStorage.setItem('pcfactory_catalog', JSON.stringify(catalog));
             
             renderProducts();
 
@@ -131,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
             card.className = 'product-card glass-panel';
             card.innerHTML = `
                 <div class="product-image-container" data-id="${product.id}">
-                    <img src="${product.image}" alt="${product.name}" class="product-image">
+                    <img src="${product.image}" alt="${product.name}" class="product-image" loading="lazy">
                     <span class="product-category">${product.category}</span>
                 </div>
                 <div class="product-info">
@@ -283,11 +293,13 @@ document.addEventListener('DOMContentLoaded', () => {
     cartToggleBtn.addEventListener('click', () => {
         cartModal.classList.add('open');
         document.body.style.overflow = 'hidden'; // Evitar scroll
+        document.body.classList.add('cart-open');
     });
 
     closeCartBtn.addEventListener('click', () => {
         cartModal.classList.remove('open');
         document.body.style.overflow = '';
+        document.body.classList.remove('cart-open');
     });
 
     // Cerrar al clickear fuera
@@ -295,6 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target === cartModal) {
             cartModal.classList.remove('open');
             document.body.style.overflow = '';
+            document.body.classList.remove('cart-open');
         }
     });
     

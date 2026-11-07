@@ -280,6 +280,12 @@ def render_product_page(product: dict[str, object]) -> str:
                 <p class="product-detail-price">${product["price"]:.2f} <span>USD</span></p>
                 <p class="product-detail-note">Consulta por WhatsApp la disponibilidad, forma de pago y opciones de envío antes de confirmar tu compra.</p>
                 <a class="btn btn-primary product-whatsapp" href="{escape(whatsapp_url)}" target="_blank" rel="noopener noreferrer">Consultar este producto por WhatsApp</a>
+                <button type="button" class="product-share-btn" id="share-btn" data-title="{escape(name)}" data-text="{summary}" data-url="{escape(page_url)}">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>
+                    </svg>
+                    <span id="share-btn-text">Compartir producto</span>
+                </button>
                 <a class="product-detail-back" href="../#catalogo">Seguir explorando el catálogo</a>
             </div>
         </article>
@@ -292,6 +298,40 @@ def render_product_page(product: dict[str, object]) -> str:
         <p>PC Factory · Barinas, Venezuela · Envíos a todo el país</p>
         <a href="../#catalogo">Ver más productos</a>
     </footer>
+
+    <script>
+        const shareBtn = document.getElementById('share-btn');
+        if (shareBtn) {{
+            shareBtn.addEventListener('click', async () => {{
+                const title = shareBtn.dataset.title;
+                const text = shareBtn.dataset.text;
+                const url = shareBtn.dataset.url || window.location.href;
+                const btnText = document.getElementById('share-btn-text');
+
+                if (navigator.share) {{
+                    try {{
+                        await navigator.share({{ title, text, url }});
+                        return;
+                    }} catch (err) {{
+                        if (err.name !== 'AbortError') console.log(err);
+                    }}
+                }}
+
+                try {{
+                    await navigator.clipboard.writeText(url);
+                    const originalText = btnText.textContent;
+                    btnText.textContent = '¡Enlace copiado!';
+                    shareBtn.style.borderColor = '#22c55e';
+                    setTimeout(() => {{
+                        btnText.textContent = originalText;
+                        shareBtn.style.borderColor = '';
+                    }}, 2500);
+                }} catch (e) {{
+                    prompt('Copia este enlace para compartir:', url);
+                }}
+            }});
+        }}
+    </script>
 </body>
 </html>
 """

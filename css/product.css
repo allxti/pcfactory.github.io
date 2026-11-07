@@ -158,3 +158,31 @@
         min-height: 220px;
     }
 }
+
+.product-share-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    margin-top: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    color: #e2e8f0;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.product-share-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--cyan, #38bdf8);
+    color: #fff;
+}
+
+.product-share-btn svg {
+    flex-shrink: 0;
+}

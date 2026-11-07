@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // IMPORTANTE: Pega aquí la URL que te dio Google Apps Script al publicar
     const GOOGLE_APP_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyADbm77LHiia9Satb5oux13TOifIzExAtowYQLJuHSKSlYci-5-uX6QCO0FldZvr5U7w/exec";
-    const CATALOG_CACHE_KEY = 'pcfactory_catalog_v3';
+    const CATALOG_CACHE_KEY = 'pcfactory_catalog_v4';
 
     function escapeHTML(value) {
         return String(value).replace(/[&<>"']/g, character => ({

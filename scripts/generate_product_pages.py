@@ -130,8 +130,8 @@ def description_html(description: str) -> str:
 
 def meta_description(product: dict[str, object]) -> str:
     details = re.sub(r"\s+", " ", str(product["description"])).strip()
-    description = f'{product["name"]} en PC Factory, Barinas. ${product["price"]:.2f} USD. '
-    description += details or "Consulta detalles y disponibilidad por WhatsApp."
+    description = f'Comprar {product["name"]} en Venezuela y Barinas. ${product["price"]:.2f} USD en PC Factory. '
+    description += details or "Envíos nacionales y entrega garantizada por WhatsApp."
     if len(description) > 160:
         description = description[:157].rsplit(" ", 1)[0] + "..."
     return description
@@ -161,6 +161,11 @@ def product_schema(product: dict[str, object]) -> dict[str, object]:
             "url": urljoin(SITE_URL, str(product["url"])),
             "priceCurrency": "USD",
             "price": f'{product["price"]:.2f}',
+            "availability": "https://schema.org/InStock",
+            "areaServed": [
+                {"@type": "City", "name": "Barinas"},
+                {"@type": "Country", "name": "Venezuela"}
+            ],
             "seller": {
                 "@type": "ElectronicsStore",
                 "name": "PC Factory",
@@ -180,7 +185,7 @@ def render_product_page(product: dict[str, object]) -> str:
     page_url = urljoin(SITE_URL, str(product["url"]))
     image_url = str(product["image"])
     image = escape(image_url)
-    title = f'{name} | PC Factory Barinas'
+    title = f'{name} en Barinas y Venezuela | PC Factory'
     summary = escape(meta_description(product))
     message = quote(f'Hola PC Factory, quiero consultar disponibilidad y envío de {product["name"]}.')
     whatsapp_url = f"https://wa.me/584245945666?text={message}"
@@ -342,6 +347,8 @@ def update_sitemap(
                 root.remove(entry)
                 continue
             seen_urls.add(location)
+        elif location.endswith("envios-venezuela.html"):
+            pass
         elif location == SITE_URL and homepage_changed:
             lastmod = entry.find(lastmod_tag)
             if lastmod is None:

@@ -109,7 +109,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function processData(data) {
         const usedSlugs = new Set();
-        return data.map((item, index) => {
+        const activeData = data.filter(item => {
+            const rawDisp = String(item["Disponible?"] || item.Disponible || "").trim().toLowerCase();
+            return !["no", "0", "false", "inactivo", "oculto"].includes(rawDisp);
+        });
+        return activeData.map((item, index) => {
             const priceValue = parsePrice(item.Precio);
             
             let imgUrl = item.Imagen || "";

@@ -83,6 +83,10 @@ def normalize_catalog(rows: list[dict[str, object]]) -> list[dict[str, object]]:
         if not title:
             continue
 
+        raw_disp = str(row.get("Disponible?") or row.get("Disponible") or "").strip().lower()
+        if raw_disp in ("no", "0", "false", "inactivo", "oculto"):
+            continue
+
         condition = str(row.get("Condicion") or "General").strip() or "General"
         raw_stock = str(row.get("Stock?") or row.get("Stock") or "").strip()
         stock_num = 0

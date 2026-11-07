@@ -1,0 +1,46 @@
+name: Sync product pages from Google Sheets
+
+on:
+  schedule:
+    - cron: "23 9 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the site
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Test product page generator
+        run: python -m unittest discover -s tests
+
+      - name: Generate product pages and sitemap
+        run: python scripts/generate_product_pages.py
+
+      - name: Commit generated catalog pages
+        run: |
+          if [ "$GITHUB_REF" != "refs/heads/main" ]; then
+            echo "Product pages can only be published from main." >&2
+            exit 1
+          fi
+
+          git add -- index.html sitemap.xml productos/
+          if git diff --cached --quiet; then
+            echo "The generated catalog has no changes."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: sync product pages from Google Sheets" \
+            -m "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"
+          git push origin HEAD:main

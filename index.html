@@ -4,19 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Título y descripción con palabras clave locales (Barinas) -->
-    <title>PC Factory | Tienda de Tecnología, Laptops y Smartphones en Venezuela</title>
-    <meta name="description" content="PC Factory: tienda de tecnología en Barinas, Venezuela. Laptops, smartphones, componentes de PC, monitores gamer y accesorios al mejor precio. Pedidos rápidos por WhatsApp.">
-    <meta name="keywords" content="tecnología Barinas, tienda de tecnología Barinas, laptops Barinas, smartphones Barinas, computadoras Barinas, componentes PC Barinas, gaming Barinas, PC Factory Venezuela">
+    <title>PC Factory | Tecnología y computación en Barinas</title>
+    <meta name="description" content="PC Factory en Barinas: laptops, smartphones, componentes de PC y accesorios. Consulta el catálogo y pide por WhatsApp; hacemos envíos a toda Venezuela.">
     <meta name="author" content="PC Factory">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#000000">
-
-    <!-- ============================================================ -->
-    <!-- ⚠️ REEMPLAZA "https://TU-DOMINIO.com" por tu dominio real en  -->
-    <!-- TODAS las etiquetas de esta sección (canonical, hreflang,    -->
-    <!-- Open Graph, Twitter y Schema). Usa siempre la misma URL.     -->
-    <!-- ============================================================ -->
 
     <!-- Canonical y hreflang -->
     <link rel="canonical" href="https://pcfactory.site/">
@@ -27,15 +19,16 @@
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="PC Factory">
     <meta property="og:locale" content="es_VE">
-    <meta property="og:title" content="PC Factory | Tienda de Tecnología en Venezuela">
-    <meta property="og:description" content="Laptops, smartphones, componentes de PC, monitores gamer y accesorios al mejor precio en Barinas, Venezuela. Pedidos por WhatsApp.">
+    <meta property="og:title" content="PC Factory | Tecnología y computación en Barinas">
+    <meta property="og:description" content="Laptops, smartphones, componentes de PC y accesorios en Barinas. Consulta el catálogo y pide por WhatsApp con envíos a toda Venezuela.">
     <meta property="og:url" content="https://pcfactory.site/">
     <meta property="og:image" content="https://pcfactory.site/Isotipo.png">
+    <meta property="og:image:alt" content="Logo de PC Factory">
 
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="PC Factory | Tienda de Tecnología en Venezuela">
-    <meta name="twitter:description" content="Laptops, smartphones, componentes de PC, monitores gamer y accesorios al mejor precio en Barinas, Venezuela.">
+    <meta name="twitter:title" content="PC Factory | Tecnología y computación en Barinas">
+    <meta name="twitter:description" content="Laptops, smartphones, componentes de PC y accesorios en Barinas. Pide por WhatsApp; hacemos envíos a toda Venezuela.">
     <meta name="twitter:image" content="https://pcfactory.site/Isotipo.png">
 
     <!-- Favicon -->
@@ -46,8 +39,7 @@
     <meta name="apple-mobile-web-app-title" content="PCFactory">
     <link rel="manifest" href="favicon/site.webmanifest">
 
-    <!-- Schema.org: datos estructurados (negocio local) -->
-    <!-- ⚠️ Completa "streetAddress" y revisa "sameAs" con tus redes reales -->
+    <!-- Schema.org: información del negocio -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -58,16 +50,36 @@
       "telephone": "+58-424-594-5666",
       "priceRange": "$$",
       "address": {
-        "@type": "5201",
-        "streetAddress": "Barinas, Ciudad Varyna, El Roble",
+        "@type": "PostalAddress",
+        "streetAddress": "Ciudad Varyna, El Roble",
         "addressLocality": "Barinas",
         "addressRegion": "Barinas",
+        "postalCode": "5201",
         "addressCountry": "VE"
       },
-      "areaServed": {
-        "@type": "City",
-        "name": "Barinas"
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
+        "opens": "09:00",
+        "closes": "18:00"
       },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Barinas"
+        },
+        {
+          "@type": "Country",
+          "name": "Venezuela"
+        }
+      ],
       "sameAs": [
         "https://www.instagram.com/pcfactory.ve"
       ]
@@ -90,7 +102,7 @@
     <!-- Header / Navbar -->
     <header class="navbar">
         <div class="logo-container">
-            <img src="Isotipo.png" alt="PC Factory Logo" class="logo-img">
+            <img src="Isotipo.png" alt="PC Factory, tienda de tecnología en Barinas" class="logo-img">
         </div>
         
         <!-- Tasas de Cambio -->
@@ -99,7 +111,7 @@
         </div>
 
         <nav>
-            <button id="cart-toggle" class="cart-toggle" aria-label="Abrir carrito">
+            <button id="cart-toggle" class="cart-toggle" aria-label="Abrir pedido" aria-controls="cart-modal" aria-expanded="false">
                 <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
                 </svg>
@@ -108,24 +120,95 @@
         </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <h1>Lo Mejor en Tecnología</h1>
-        <p>Encuentra los equipos y componentes que necesitas al mejor precio del mercado.</p>
-    </section>
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Tienda de tecnología en Barinas, Venezuela</h1>
+            <p>Laptops, smartphones, componentes de PC, monitores gamer y accesorios. Consulta nuestro catálogo y haz tu pedido por WhatsApp.</p>
+            <div class="hero-actions">
+                <a class="btn btn-primary hero-cta" href="https://wa.me/584245945666?text=Hola%20PC%20Factory%2C%20quiero%20consultar%20sobre%20el%20cat%C3%A1logo." target="_blank" rel="noopener noreferrer">Consultar por WhatsApp</a>
+                <a class="hero-catalog-link" href="#catalogo">Explorar catálogo</a>
+            </div>
+        </section>
 
-    <!-- Product Catalog -->
-    <main class="products-section">
-        <h2 class="section-title">Productos Destacados</h2>
-        <div id="product-grid" class="product-grid">
-            <!-- Los productos se inyectarán aquí mediante JS -->
+        <section class="shopping-benefits" aria-label="Cómo comprar en PC Factory">
+            <div class="benefit-item">
+                <span class="benefit-number" aria-hidden="true">01</span>
+                <div>
+                    <h2>Elige con calma</h2>
+                    <p>Revisa productos y precios publicados en el catálogo.</p>
+                </div>
+            </div>
+            <div class="benefit-item">
+                <span class="benefit-number" aria-hidden="true">02</span>
+                <div>
+                    <h2>Confirma por WhatsApp</h2>
+                    <p>Consulta disponibilidad y resuelve tus dudas directamente.</p>
+                </div>
+            </div>
+            <div class="benefit-item">
+                <span class="benefit-number" aria-hidden="true">03</span>
+                <div>
+                    <h2>Coordina tu entrega</h2>
+                    <p>Entregas en Barinas y envíos a toda Venezuela.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Catalog -->
+        <section id="catalogo" class="products-section">
+            <h2 class="section-title">Catálogo de tecnología</h2>
+            <p class="catalog-intro">Explora productos bajo pedido. Los precios se muestran en USD; confirma disponibilidad, forma de pago y envío por WhatsApp.</p>
+            <div class="catalog-tools">
+                <label class="catalog-search-label" for="catalog-search">Encuentra un producto</label>
+                <div class="catalog-filters">
+                    <input id="catalog-search" class="catalog-search" type="search" placeholder="Ej.: laptop, iPhone, monitor" autocomplete="off">
+                    <label class="visually-hidden" for="condition-filter">Filtrar por condición</label>
+                    <select id="condition-filter" class="condition-filter">
+                        <option value="">Todas las condiciones</option>
+                    </select>
+                </div>
+                <p id="catalog-result-count" class="catalog-result-count" aria-live="polite"></p>
+            </div>
+            <div id="product-grid" class="product-grid">
+                <!-- PRODUCT PAGES:START -->
+<article class="product-card glass-panel">
+    <a class="product-image-container product-static-image" href="productos/fuente-de-poder-spidertec-600w.html" aria-label="Ver detalles de Fuente de poder Spidertec 600w">
+        <img src="https://i.postimg.cc/sfmdy00H/D-NQ-NP-2X-953090-MLV116192589009-082026-F.png" alt="Fuente de poder Spidertec 600w" class="product-image" loading="lazy">
+        <span class="product-category">Nuevo</span>
+    </a>
+    <div class="product-info">
+        <h3 class="product-name">Fuente de poder Spidertec 600w</h3>
+        <p class="product-availability">Bajo pedido · confirma disponibilidad</p>
+        <div class="product-footer">
+            <span class="product-price">$20.00</span>
+            <a class="btn btn-primary" href="productos/fuente-de-poder-spidertec-600w.html">Ver ficha del producto</a>
         </div>
+    </div>
+</article>
+<article class="product-card glass-panel">
+    <a class="product-image-container product-static-image" href="productos/memoria-ram-ddr4-8gb-2133mhz-2rx8-para-laptop.html" aria-label="Ver detalles de Memoria Ram DDR4 8gb 2133mhz 2rx8 Para Laptop">
+        <img src="https://i.postimg.cc/L5cjGVfm/Whats-App-Image-2026-10-25-at-11-34-04-PM.png" alt="Memoria Ram DDR4 8gb 2133mhz 2rx8 Para Laptop" class="product-image" loading="lazy">
+        <span class="product-category">Usado</span>
+    </a>
+    <div class="product-info">
+        <h3 class="product-name">Memoria Ram DDR4 8gb 2133mhz 2rx8 Para Laptop</h3>
+        <p class="product-availability">Bajo pedido · confirma disponibilidad</p>
+        <div class="product-footer">
+            <span class="product-price">$50.00</span>
+            <a class="btn btn-primary" href="productos/memoria-ram-ddr4-8gb-2133mhz-2rx8-para-laptop.html">Ver ficha del producto</a>
+        </div>
+    </div>
+</article>
+<!-- PRODUCT PAGES:END -->
+            </div>
+        </section>
     </main>
 
     <!-- Shopping Cart Modal -->
-    <aside id="cart-modal" class="cart-modal">
+    <aside id="cart-modal" class="cart-modal" role="dialog" aria-modal="true" aria-labelledby="cart-title" aria-hidden="true" tabindex="-1">
         <div class="cart-header">
-            <h3>Tu Carrito</h3>
+            <h3 id="cart-title">Tu pedido</h3>
             <button id="close-cart" class="close-btn" aria-label="Cerrar carrito">&times;</button>
         </div>
         <div id="cart-items" class="cart-items">
@@ -136,13 +219,14 @@
                 <span>Total:</span>
                 <span id="cart-total">$0.00</span>
             </div>
-            <button id="checkout-btn" class="btn btn-primary checkout-btn">Realizar pedido</button>
+            <p class="checkout-note">Al continuar, enviaremos este resumen por WhatsApp para confirmar disponibilidad y coordinar los detalles.</p>
+            <button id="checkout-btn" class="btn btn-primary checkout-btn" disabled>Enviar pedido por WhatsApp</button>
         </div>
     </aside>
 
     <!-- Product Preview Modal -->
-    <div id="preview-modal" class="preview-modal">
-        <div class="preview-content">
+    <div id="preview-modal" class="preview-modal" role="dialog" aria-modal="true" aria-labelledby="preview-title" aria-hidden="true">
+        <div class="preview-content" tabindex="-1">
             <button id="close-preview" class="preview-close" aria-label="Cerrar vista previa">&times;</button>
             <div class="preview-image-container">
                 <img id="preview-img" src="" alt="Vista previa">
@@ -152,27 +236,24 @@
                 <div id="preview-price" class="preview-price"></div>
                 <p id="preview-desc" class="preview-desc"></p>
                 <button id="preview-add-cart" class="btn btn-primary">
-                    <span>Añadir al carrito</span>
+                    <span>Agregar al pedido</span>
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Footer SEO - Contenido local Barinas -->
+    <!-- Información del negocio -->
     <footer class="site-footer">
         <div class="footer-content">
-            <h2>PC Factory - Tienda de Tecnología en Barinas, Venezuela</h2>
+            <h2>PC Factory: tecnología en Barinas y envíos en Venezuela</h2>
             <p>
-                En <strong>PC Factory</strong> somos tu tienda de tecnología de referencia en <strong>Barinas, Venezuela</strong>,
-                especializada en la venta de laptops, smartphones, componentes de PC, monitores gamer y accesorios originales.
-                Trabajamos bajo una eficiente modalidad de <strong>bajo pedido o dropshipping</strong>, lo que nos permite conectarte
-                con el mayor catálogo internacional y garantizarte productos de los mejores proveedores para asegurar siempre la máxima calidad.
+                En <strong>PC Factory</strong> encontrarás laptops, smartphones, componentes de PC, monitores gamer y accesorios.
+                Trabajamos bajo pedido para ofrecerte productos de distintos proveedores; consulta en nuestro catálogo o por WhatsApp
+                la disponibilidad y los detalles de cada artículo.
             </p>
             <p>
-                Atendemos pedidos con trato personalizado a través de <strong>WhatsApp y nuestro Instagram</strong>.
-                Realizamos entregas seguras en Barinas y envíos a todo el territorio nacional de Venezuela. Nuestro compromiso
-                es tu satisfacción total, gestionando el respaldo y garantías directamente con cada proveedor para que 
-                tengas la mejor experiencia de compra.
+                Atendemos consultas y pedidos por <strong>WhatsApp e Instagram</strong>. Realizamos entregas en Barinas y envíos
+                a todo el territorio nacional de Venezuela. Para comprar, agrega los productos al carrito y envía tu pedido por WhatsApp.
             </p>
             <div class="footer-info">
                 <p><strong>📍 Dirección:</strong> Barinas, Venezuela</p>
@@ -184,8 +265,8 @@
     </footer>
 
     <!-- WhatsApp Floating Button -->
-    <a href="https://wa.me/584245945666" class="whatsapp-float" target="_blank" aria-label="Chat en WhatsApp">
-        <img src="img/logo whatsapp.avif" alt="WhatsApp Logo">
+    <a href="https://wa.me/584245945666" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chatear con PC Factory por WhatsApp">
+        <img src="img/logo whatsapp.avif" alt="" aria-hidden="true">
     </a>
 
 </body>

@@ -1,9 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https:/pcfactory.site/</loc>
-    <lastmod>2026-06-12</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
+    <loc>https://pcfactory.site/</loc>
+    <lastmod>2026-11-07</lastmod>
+  </url>
+  <url>
+    <loc>https://pcfactory.site/productos/fuente-de-poder-spidertec-600w.html</loc>
+    <lastmod>2026-11-07</lastmod>
+  </url>
+  <url>
+    <loc>https://pcfactory.site/productos/memoria-ram-ddr4-8gb-2133mhz-2rx8-para-laptop.html</loc>
+    <lastmod>2026-11-07</lastmod>
   </url>
 </urlset>

@@ -84,6 +84,13 @@ def normalize_catalog(rows: list[dict[str, object]]) -> list[dict[str, object]]:
             continue
 
         condition = str(row.get("Condicion") or "General").strip() or "General"
+        raw_stock = str(row.get("Stock?") or row.get("Stock") or "").strip()
+        stock_num = 0
+        try:
+            stock_num = int(float(raw_stock)) if raw_stock else 0
+        except ValueError:
+            stock_num = 0
+        has_stock = stock_num >= 1
         base_slug = slugify(title)
         slug = base_slug
         if slug in used_slugs:
@@ -109,6 +116,8 @@ def normalize_catalog(rows: list[dict[str, object]]) -> list[dict[str, object]]:
                 "price": parse_price(row.get("Precio")),
                 "image": resolve_image(row, title),
                 "description": description,
+                "has_stock": has_stock,
+                "stock_count": stock_num,
             }
         )
 
@@ -161,7 +170,7 @@ def product_schema(product: dict[str, object]) -> dict[str, object]:
             "url": urljoin(SITE_URL, str(product["url"])),
             "priceCurrency": "USD",
             "price": f'{product["price"]:.2f}',
-            "availability": "https://schema.org/InStock",
+            "availability": "https://schema.org/InStock" if product.get("has_stock") else "https://schema.org/PreOrder",
             "areaServed": [
                 {"@type": "City", "name": "Barinas"},
                 {"@type": "Country", "name": "Venezuela"}
@@ -187,7 +196,16 @@ def render_product_page(product: dict[str, object]) -> str:
     image = escape(image_url)
     title = f'{name} en Barinas y Venezuela | PC Factory'
     summary = escape(meta_description(product))
-    message = quote(f'Hola PC Factory, quiero consultar disponibilidad y envío de {product["name"]}.')
+    has_stock = bool(product.get("has_stock"))
+    if has_stock:
+        availability_label = "Disponible · Entrega inmediata o nacional"
+        availability_badge = f"{condition} · En inventario"
+        whatsapp_msg = f'Hola PC Factory, me interesa comprar {product["name"]} (disponible en inventario).'
+    else:
+        availability_label = "Bajo pedido · Proveedor garantizado"
+        availability_badge = f"{condition} · Bajo pedido"
+        whatsapp_msg = f'Hola PC Factory, quiero consultar pedido y tiempo de entrega de {product["name"]}.'
+    message = quote(whatsapp_msg)
     whatsapp_url = f"https://wa.me/584245945666?text={message}"
 
     schema = json_ld(product_schema(product))
@@ -253,7 +271,7 @@ def render_product_page(product: dict[str, object]) -> str:
                 <img src="{image}" alt="{name}" fetchpriority="high">
             </div>
             <div class="product-detail-info">
-                <p class="product-detail-condition">{condition} · Bajo pedido</p>
+                <p class="product-detail-condition">{availability_badge}</p>
                 <h1>{name}</h1>
                 <p class="product-detail-price">${product["price"]:.2f} <span>USD</span></p>
                 <p class="product-detail-note">Consulta por WhatsApp la disponibilidad, forma de pago y opciones de envío antes de confirmar tu compra.</p>
@@ -287,7 +305,7 @@ def render_catalog_card(product: dict[str, object]) -> str:
     </a>
     <div class="product-info">
         <h3 class="product-name">{name}</h3>
-        <p class="product-availability">Bajo pedido · confirma disponibilidad</p>
+        <p class="product-availability">{"Disponible · Entrega inmediata o nacional" if product.get("has_stock") else "Bajo pedido · Proveedor garantizado"}</p>
         <div class="product-footer">
             <span class="product-price">${product["price"]:.2f}</span>
             <a class="btn btn-primary" href="{url}">Ver ficha del producto</a>

@@ -123,6 +123,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             let desc = (item.Descripcion || "Sin descripción disponible.").replace(/\r\n?/g, '\n');
             const name = String(item.Titulo || "Producto sin nombre").trim() || "Producto sin nombre";
+            const rawStock = String(item["Stock?"] || item.Stock || "").trim();
+            const stockNum = parseFloat(rawStock);
+            const hasStock = !isNaN(stockNum) && stockNum >= 1;
             const category = String(item.Condicion || "General").trim() || "General";
             const baseSlug = slugifyProductPart(name);
             let slug = baseSlug;
@@ -143,6 +146,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 price: priceValue,
                 image: imgUrl,
                 description: desc,
+                hasStock: hasStock,
+                stockCount: isNaN(stockNum) ? 0 : stockNum,
                 url: `productos/${slug}.html`
             };
         });
@@ -232,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </button>
                 <div class="product-info">
                     <h3 class="product-name">${escapeHTML(product.name)}</h3>
-                    <p class="product-availability">Bajo pedido · confirma disponibilidad</p>
+                    <p class="product-availability">${product.hasStock ? '🟢 Disponible · Entrega inmediata o nacional' : '📦 Bajo pedido · Proveedor garantizado'}</p>
                     <div class="product-footer">
                         <span class="product-price">$${product.price.toFixed(2)}</span>
                         <button class="btn btn-primary add-to-cart" data-id="${escapeHTML(product.id)}">

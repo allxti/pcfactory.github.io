@@ -165,24 +165,31 @@
     justify-content: center;
     gap: 0.5rem;
     width: 100%;
-    margin-top: 0.75rem;
-    padding: 0.75rem 1.25rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 8px;
-    color: #e2e8f0;
-    font-size: 0.95rem;
+    margin-top: 0.5rem;
+    padding: 0.65rem 1rem;
+    background: rgba(30, 41, 59, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 9999px;
+    color: #cbd5e1;
+    font-size: 0.88rem;
     font-weight: 500;
+    letter-spacing: 0.01em;
     cursor: pointer;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
-.product-share-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
+.product-share-btn:hover,
+.product-share-btn:active {
+    background: rgba(51, 65, 85, 0.9);
     border-color: var(--cyan, #38bdf8);
-    color: #fff;
+    color: #ffffff;
+    transform: translateY(-1px);
 }
 
 .product-share-btn svg {
     flex-shrink: 0;
+    color: var(--cyan, #38bdf8);
 }

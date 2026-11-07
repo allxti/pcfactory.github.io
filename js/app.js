@@ -235,12 +235,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const card = document.createElement('div');
             card.className = 'product-card glass-panel';
             card.innerHTML = `
-                <button class="product-image-container" type="button" data-id="${escapeHTML(product.id)}" aria-label="Ver detalles de ${escapeHTML(product.name)}">
+                <a class="product-image-container product-static-image" href="${escapeHTML(product.url)}" aria-label="Ver detalles de ${escapeHTML(product.name)}">
                     <img src="${escapeHTML(product.image)}" alt="${escapeHTML(product.name)}" class="product-image" loading="lazy">
                     <span class="product-category">${escapeHTML(product.category)}</span>
-                </button>
+                </a>
                 <div class="product-info">
-                    <h3 class="product-name">${escapeHTML(product.name)}</h3>
+                    <h3 class="product-name"><a href="${escapeHTML(product.url)}" style="color: inherit; text-decoration: none;">${escapeHTML(product.name)}</a></h3>
                     <p class="product-availability">${product.hasStock ? '🟢 Disponible · Entrega inmediata o nacional' : '📦 Bajo pedido · Proveedor garantizado'}</p>
                     <div class="product-footer">
                         <span class="product-price">$${product.price.toFixed(2)}</span>
@@ -254,13 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
             productGrid.appendChild(card);
         });
 
-        // Event Listeners for Product Preview (Image Click)
-        productGrid.querySelectorAll('.product-image-container').forEach(container => {
-            container.addEventListener('click', (e) => {
-                const id = e.currentTarget.getAttribute('data-id');
-                openPreview(id);
-            });
-        });
+        // Navegación directa a la ficha del producto al hacer clic en la imagen o enlace
 
         // Event Listeners for "Add to Cart"
         productGrid.querySelectorAll('.add-to-cart').forEach(btn => {

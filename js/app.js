@@ -517,6 +517,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 800);
     });
     conditionFilter.addEventListener('change', renderProducts);
+
+    // FAQ Accordion
+    document.querySelectorAll('.faq-question').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const item = btn.closest('.faq-item');
+            const isOpen = item.classList.contains('active');
+            
+            // Cerrar otros
+            document.querySelectorAll('.faq-item').forEach(other => {
+                if (other !== item) {
+                    other.classList.remove('active');
+                    const otherBtn = other.querySelector('.faq-question');
+                    if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            if (isOpen) {
+                item.classList.remove('active');
+                btn.setAttribute('aria-expanded', 'false');
+            } else {
+                item.classList.add('active');
+                btn.setAttribute('aria-expanded', 'true');
+            }
+        });
+    });
     
     // WhatsApp Checkout
     checkoutBtn.addEventListener('click', () => {

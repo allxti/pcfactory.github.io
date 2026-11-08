@@ -234,6 +234,15 @@ def render_product_page(product: dict[str, object]) -> str:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7D0QBT2Z5B"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){{dataLayer.push(arguments);}}
+      gtag('js', new Date());
+
+      gtag('config', 'G-7D0QBT2Z5B');
+    </script>
     <title>{escape(title)}</title>
     <meta name="description" content="{summary}">
     <meta name="robots" content="index, follow">

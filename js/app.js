@@ -28,7 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // IMPORTANTE: Pega aquí la URL que te dio Google Apps Script al publicar
     const GOOGLE_APP_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyADbm77LHiia9Satb5oux13TOifIzExAtowYQLJuHSKSlYci-5-uX6QCO0FldZvr5U7w/exec";
-    const CATALOG_CACHE_KEY = 'pcfactory_catalog_v4';
+    const CATALOG_CACHE_KEY = 'pcfactory_catalog_v5';
+    const USER_INTEREST_KEY = 'pcfactory_user_interest_v1';
 
     function escapeHTML(value) {
         return String(value).replace(/[&<>"']/g, character => ({
@@ -206,16 +207,51 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Renderizar Productos
+    // Obtener intereses previos del usuario
+    function getUserInterests() {
+        try {
+            return JSON.parse(localStorage.getItem(USER_INTEREST_KEY) || '[]');
+        } catch (e) {
+            return [];
+        }
+    }
+
+    // Renderizar Productos con ordenamiento inteligente y sugerencias
     function renderProducts() {
         productGrid.innerHTML = '';
         const query = normalizeSearchText(catalogSearch.value.trim());
         const selectedCategory = conditionFilter.value;
-        const filteredCatalog = catalog.filter(product => {
+        const userInterests = getUserInterests();
+
+        let filteredCatalog = catalog.filter(product => {
             const searchableText = normalizeSearchText(`${product.name} ${product.category} ${product.description}`);
             return (!query || searchableText.includes(query))
                 && (!selectedCategory || product.category === selectedCategory);
         });
+
+        // Si el usuario no está filtrando activamente por el buscador, ordenamos según su interés previo y stock
+        if (!query && userInterests.length > 0) {
+            filteredCatalog.sort((a, b) => {
+                const textA = normalizeSearchText(`${a.name} ${a.description}`);
+                const textB = normalizeSearchText(`${b.name} ${b.description}`);
+
+                // Puntuación según coincidencias con búsquedas anteriores del usuario
+                let scoreA = 0;
+                let scoreB = 0;
+
+                userInterests.forEach((term, index) => {
+                    const weight = (userInterests.length - index); // Más peso a búsquedas recientes
+                    if (textA.includes(term)) scoreA += weight * 10;
+                    if (textB.includes(term)) scoreB += weight * 10;
+                });
+
+                // Bono si tiene stock disponible
+                if (a.hasStock) scoreA += 5;
+                if (b.hasStock) scoreB += 5;
+
+                return scoreB - scoreA;
+            });
+        }
 
         catalogResultCount.textContent = filteredCatalog.length === catalog.length
             ? `${catalog.length} ${catalog.length === 1 ? 'producto en el catálogo' : 'productos en el catálogo'}`
@@ -462,7 +498,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    catalogSearch.addEventListener('input', renderProducts);
+    let searchTimeout = null;
+    catalogSearch.addEventListener('input', () => {
+        renderProducts();
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+            const val = catalogSearch.value.trim();
+            if (val.length >= 3) {
+                try {
+                    const terms = JSON.parse(localStorage.getItem(USER_INTEREST_KEY) || '[]');
+                    const cleanVal = normalizeSearchText(val);
+                    if (!terms.includes(cleanVal)) {
+                        terms.unshift(cleanVal);
+                        localStorage.setItem(USER_INTEREST_KEY, JSON.stringify(terms.slice(0, 5)));
+                    }
+                } catch (e) {}
+            }
+        }, 800);
+    });
     conditionFilter.addEventListener('change', renderProducts);
     
     // WhatsApp Checkout
